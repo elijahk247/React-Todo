@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom'
 import TodoList from './components/TodoList'
 import TodoForm from './components/TodoForm'
 
+import './components/Todo.css'
+
 const initialTodo = [  
   {
   task: 'Organize Garage',
@@ -30,6 +32,22 @@ class App extends React.Component {
     }
   }
 
+  // changing tasks to completed onClick
+  toggleCompleted = (clickedTaskId) => {
+    this.setState({
+      todos: this.state.todos.map((task) => {
+        if (task.id === clickedTaskId) {
+          return {
+            ...task,
+            completed: !task.completed
+          };
+        } else {
+          return task;
+        }
+      })
+    });
+  };
+
   // adding items to the todos state
   addItem = (taskName) => {
     const newTodo = {
@@ -43,16 +61,26 @@ class App extends React.Component {
     })
   }
 
+  // removing completed items and updating state to reflect that 
+  removeCompleted = () => {
+    this.setState({
+      todos: this.state.todos.filter(task => {
+        return !task.completed
+      })
+    });
+    console.log(this.state.todos)
+  }
+
 
   render() {
     return (
       <div>
         <div>
           <h2>Todo List: MVP</h2>
-          <TodoList todos={this.state.todos} />
+          <TodoList todos={this.state.todos} toggleCompleted={this.toggleCompleted} />
         </div>
 
-        <TodoForm addItem={this.addItem}/>
+        <TodoForm addItem={this.addItem} removeCompleted={this.removeCompleted}/>
       </div>
     );
   }

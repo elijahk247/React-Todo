@@ -1,10 +1,14 @@
 import React from 'react'
 
+// styling the completed task
+
+
 export default function Todo(props) {
-  const { todo } = props;
+  const { todo, toggleCompleted } = props;
 
   return(
-    <div>
+    <div onClick={() => toggleCompleted(todo.id)}
+    className={todo.completed ? "completed" : ''}>
       <p>
         {todo.task}
       </p>

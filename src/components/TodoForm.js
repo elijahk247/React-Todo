@@ -1,8 +1,8 @@
 import React from 'react'
 
 class TodoForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       todo: ''
@@ -20,7 +20,12 @@ class TodoForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.addItem(this.state.todo)
+    
+    this.setState({
+      todo: ''
+    })
   }
+  
 
   // render the buttons
   render() {
@@ -33,6 +38,7 @@ class TodoForm extends React.Component {
           onChange={this.handleChanges}
         />
         <button>Add Todo</button>
+        <button onClick={() => this.props.removeCompleted}>{console.log(this.props.removeCompleted)}Clear Completed</button>
       </form>
     )
   }
