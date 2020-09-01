@@ -57,27 +57,33 @@ class App extends React.Component {
     };
 
     this.setState({
-      todos: [... this.state.todos, newTodo]
+      todos: [...this.state.todos, newTodo]
     })
   }
 
   // removing completed items and updating state to reflect that 
-  removeCompleted = () => {
+  removeCompleted = (taskId) => {
+    const uncompletedTasks = this.state.todos.filter(task => {
+      return !task.completed
+    })
+
     this.setState({
-      todos: this.state.todos.filter(task => {
-        return !task.completed
-      })
-    });
-    console.log(this.state.todos)
+      todos: uncompletedTasks
+    })
+    
+    /*this.setState({
+      todos: this.state.todos.filter(todo => !todo.completed)
+    })*/
   }
 
+  
 
   render() {
     return (
       <div>
         <div>
           <h2>Todo List: MVP</h2>
-          <TodoList todos={this.state.todos} toggleCompleted={this.toggleCompleted} />
+          <TodoList todos={this.state.todos} toggleCompleted={this.toggleCompleted}/>
         </div>
 
         <TodoForm addItem={this.addItem} removeCompleted={this.removeCompleted}/>
