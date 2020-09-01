@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 
 // importing other files to render 
 import TodoList from './components/TodoList'
+import TodoForm from './components/TodoForm'
 
 const initialTodo = [  
   {
@@ -29,12 +30,29 @@ class App extends React.Component {
     }
   }
 
+  // adding items to the todos state
+  addItem = (taskName) => {
+    const newTodo = {
+      task: taskName,
+      id: new Date(),
+      completed: false,
+    };
+
+    this.setState({
+      todos: [... this.state.todos, newTodo]
+    })
+  }
+
 
   render() {
     return (
       <div>
-        <h2>Todo List: MVP</h2>
-        <TodoList todos={this.state.todos} />
+        <div>
+          <h2>Todo List: MVP</h2>
+          <TodoList todos={this.state.todos} />
+        </div>
+
+        <TodoForm addItem={this.addItem}/>
       </div>
     );
   }
